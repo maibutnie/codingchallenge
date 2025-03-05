@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { Box, Button, Card, CardContent, CardMedia, Container, Divider, IconButton, List, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Container, Divider, IconButton, Typography } from "@mui/material";
 import { Product } from "../interface/Product";
 import { useEffect, useState } from "react";
-import { addToCart, CartItem, removeAll } from "../redux/cartD";
-import { Add, Delete, Favorite, FavoriteBorder, FavoriteBorderOutlined, Remove } from "@mui/icons-material";
+import { addToCart, removeAll } from "../redux/cartD";
+import { Add, Delete, Favorite, FavoriteBorderOutlined, Remove } from "@mui/icons-material";
 import { FavState, handleFav } from "../redux/favourites";
 
 function Cart() {
@@ -34,7 +34,7 @@ function Cart() {
   }
 
   function handleRemoveAll() {
-    dispatch(removeAll({}))
+    dispatch(removeAll())
   }
 
   function getQuantity(id: number) {

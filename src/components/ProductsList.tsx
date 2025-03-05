@@ -148,7 +148,7 @@ function ProductsList() {
         )}
       </Grid>
       <Stack spacing={2} sx={{ marginTop: 2 }}>
-        <Pagination count={count} variant="outlined" page={page} onChange={(event, value) => handlePage(value)} />
+        <Pagination count={count} variant="outlined" page={page} onChange={(_, value) => handlePage(value)} />
       </Stack>
     </Container>
   );
