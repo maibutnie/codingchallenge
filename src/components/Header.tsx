@@ -1,4 +1,4 @@
-import { Add, Favorite, FavoriteBorderOutlined } from "@mui/icons-material";
+import { Add, Check, Favorite, FavoriteBorderOutlined } from "@mui/icons-material";
 import { Box, Card, CardContent, CardMedia, IconButton, Popover, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import CreateDialog from "./CreateDialog";
@@ -6,7 +6,7 @@ import { Product } from "../interface/Product";
 import { useDispatch, useSelector } from "react-redux";
 import { FavState, handleFav } from "../redux/favourites";
 import { RootState } from "../redux/store";
-import { addToCart } from "../redux/cartD";
+import { addToCart, removeOneFromCart } from "../redux/cartD";
 
 function Header() {
     const url: string = 'https://dummyjson.com/products/search?q=';
@@ -45,11 +45,21 @@ function Header() {
         setAnchorEl(null);
     };
 
+    //cart
+
+    function isInCart(id: number) {
+        return !carts.find(item => item.id == id);
+    }
+
     function handleAddToCart(id: number, quantity: number) {
         dispatch(addToCart({
             id: id,
             quantity: quantity
         }))
+    }
+
+    function handleRemoveOneFromCart(id: number) {
+        dispatch(removeOneFromCart(id))
     }
 
     //favs
@@ -125,9 +135,18 @@ function Header() {
                                     )}
                                 </IconButton>
                                 <Box display="flex" alignItems="center" mx={2}>
-                                    <IconButton size="small" onClick={() => handleAddToCart(item.id, 1)}>
-                                        <Add />
-                                    </IconButton>
+                                    {isInCart(item.id) ? (
+                                        <IconButton aria-label="add to cart" onClick={() => handleAddToCart(item.id, 1)}>
+                                            <Add />
+                                            <p>add to cart</p>
+                                        </IconButton>
+                                    ) : (
+                                        <IconButton aria-label="add to cart" onClick={() => handleRemoveOneFromCart(item.id)}>
+                                            <Check />
+                                            <p>added to cart</p>
+                                        </IconButton>
+                                    )
+                                    }
                                 </Box>
                             </Card>
                         ))}

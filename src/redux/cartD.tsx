@@ -32,7 +32,7 @@ const cartSlice = createSlice({
                 state.items.splice(index, 1);
             }
         },
-        removeAll(state, action) {
+        removeAll(state) {
             state.items = [];
         }
     }
