@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { Box, Button, Card, CardContent, CardMedia, Container, Divider, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Container, Divider, IconButton, Typography } from "@mui/material";
 import { Product } from "../interface/Product";
 import { useEffect, useState } from "react";
 import { addToCart, removeAll, removeOneFromCart } from "../redux/cartD";
@@ -12,8 +12,6 @@ function Cart() {
   const dispatch = useDispatch();
   const carts = useSelector((store: RootState) => store.cart.items);
   const favItems = useSelector((state: { fav: FavState }) => state.fav.items);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [data, setData] = useState<Product[]>([]);
 
