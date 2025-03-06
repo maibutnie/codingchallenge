@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { Box, Button, Card, CardContent, CardMedia, Container, Divider, IconButton, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Container, Divider, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Product } from "../interface/Product";
 import { useEffect, useState } from "react";
-import { addToCart, removeAll } from "../redux/cartD";
+import { addToCart, removeAll, removeOneFromCart } from "../redux/cartD";
 import { Add, Delete, Favorite, FavoriteBorderOutlined, Remove } from "@mui/icons-material";
 import { FavState, handleFav } from "../redux/favourites";
 
@@ -12,6 +12,8 @@ function Cart() {
   const dispatch = useDispatch();
   const carts = useSelector((store: RootState) => store.cart.items);
   const favItems = useSelector((state: { fav: FavState }) => state.fav.items);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [data, setData] = useState<Product[]>([]);
 
@@ -31,6 +33,10 @@ function Cart() {
       id: id,
       quantity: quantity
     }))
+  }
+
+  function handleRemoveOneFromCart(id: number) {
+      dispatch(removeOneFromCart(id))
   }
 
   function handleRemoveAll() {
@@ -98,29 +104,29 @@ function Cart() {
             </Typography>
           </CardContent>
 
-          <IconButton aria-label="add/remove to favorites" onClick={() => changeFav(item.id)}>
-            {isFav(item.id) ? (
-              <FavoriteBorderOutlined />
-            ) : (
-              <Favorite />
-            )}
-          </IconButton>
-
-          <Box display="flex" alignItems="center" mx={2}>
-            <IconButton size="small" onClick={() => handleAddToCart(item.id, -1)}>
-              <Remove />
+          <Box display={"flex"} flexDirection={"column"}>
+            <IconButton aria-label="add/remove to favorites" onClick={() => changeFav(item.id)}>
+              {isFav(item.id) ? (
+                <FavoriteBorderOutlined />
+              ) : (
+                <Favorite />
+              )}
             </IconButton>
-            <Typography variant="body1" mx={1}>
-              {getQuantity(item.id)}
-            </Typography>
-            <IconButton size="small" onClick={() => handleAddToCart(item.id, 1)}>
-              <Add />
+            <Box display="flex" alignItems="center" mx={2}>
+              <IconButton size="small" onClick={() => handleAddToCart(item.id, -1)}>
+                <Remove />
+              </IconButton>
+              <Typography variant="body1" mx={1}>
+                {getQuantity(item.id)}
+              </Typography>
+              <IconButton size="small" onClick={() => handleAddToCart(item.id, 1)}>
+                <Add />
+              </IconButton>
+            </Box>
+            <IconButton>
+              <Delete onClick={() => handleRemoveOneFromCart(item.id)}/>
             </IconButton>
           </Box>
-
-          <IconButton>
-            <Delete />
-          </IconButton>
         </Card>
       ))}
 

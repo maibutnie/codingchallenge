@@ -1,5 +1,5 @@
 import { Add, Check, Favorite, FavoriteBorderOutlined } from "@mui/icons-material";
-import { Box, Card, CardContent, CardMedia, IconButton, Popover, TextField, Typography } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, IconButton, Popover, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import CreateDialog from "./CreateDialog";
 import { Product } from "../interface/Product";
@@ -13,6 +13,8 @@ function Header() {
     const favItems = useSelector((state: { fav: FavState }) => state.fav.items);
     const carts = useSelector((store: RootState) => store.cart.items);
     const dispatch = useDispatch();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -138,12 +140,12 @@ function Header() {
                                     {isInCart(item.id) ? (
                                         <IconButton aria-label="add to cart" onClick={() => handleAddToCart(item.id, 1)}>
                                             <Add />
-                                            <p>add to cart</p>
+                                            {isMobile ? (<></>) : (<p>add to cart</p>)}
                                         </IconButton>
                                     ) : (
                                         <IconButton aria-label="add to cart" onClick={() => handleRemoveOneFromCart(item.id)}>
                                             <Check />
-                                            <p>added to cart</p>
+                                            {isMobile ? (<></>) : (<p>added to cart</p>)}
                                         </IconButton>
                                     )
                                     }

@@ -100,8 +100,8 @@ function ProductsList() {
       <Grid container spacing={2} justifyContent="center">
         {data ? (
           data.map((item, index) => (
-            <Grid key={index} size={{ xs: 12, sm: 6, md: 6 }}>
-              <Card sx={{ Width: 345 }}>
+            <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }}>
+              <Card sx={{ width: '100%' }}>
                 <CardMedia
                   sx={{ height: 300 }}
                   image={item.images[0]}

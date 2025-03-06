@@ -76,49 +76,65 @@ function CreateDialog({ open, onClose }: CreateDialogProps) {
     <DialogTitle sx={{ backgroundColor: '#f9fafb' }}>Create New Product</DialogTitle>
     <form onSubmit={handleSubmit(onSubmit)}>
       <DialogContent sx={{ padding: 3 }}>
-        <Box mb={3} display="flex" justifyContent="center" alignItems="center">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            id="image-upload"
-            style={{ display: 'none' }}
-          />
-          <label htmlFor="image-upload">
-            {imagePreview ? (
-              <img
-                src={imagePreview}
-                alt="Preview"
-                style={{
-                  width: '128px',
-                  height: '128px',
-                  objectFit: 'cover',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  border: '2px dashed #cbd5e0',
-                }}
-              />
-            ) : (
-              <Box
-                sx={{
-                  width: 128,
-                  height: 128,
-                  backgroundColor: '#f3f4f6',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  border: '2px dashed #cbd5e0',
-                }}
-              >
-                <Typography variant="body2" color="textSecondary">
-                  Add Image
-                </Typography>
-              </Box>
-            )}
-          </label>
-        </Box>
+      <Box mb={3} display="flex" justifyContent="center" alignItems="center">
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleImageChange}
+    id="image-upload"
+    style={{
+      position: "absolute",
+      width: "1px",
+      height: "1px",
+      padding: 0,
+      margin: "-1px",
+      overflow: "hidden",
+      border: 0,
+      clip: "rect(0, 0, 0, 0)",
+      whiteSpace: "nowrap",
+    }}
+  />
+  <label htmlFor="image-upload" onKeyDown={(e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        document.getElementById("image-upload")?.click();
+      }
+    }} tabIndex={0}>
+    {imagePreview ? (
+      <img
+        src={imagePreview}
+        alt="Preview"
+        style={{
+          width: "128px",
+          height: "128px",
+          objectFit: "cover",
+          borderRadius: "8px",
+          cursor: "pointer",
+          border: "2px dashed #cbd5e0",
+        }}
+      />
+    ) : (
+      <Box
+        sx={{
+          width: 128,
+          height: 128,
+          backgroundColor: "#f3f4f6",
+          borderRadius: "8px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          border: "2px dashed #cbd5e0",
+          "&:focus": { outline: "2px solid #3f51b5" }, // Стилизация при фокусе
+        }}
+      >
+        <Typography variant="body2" color="textSecondary">
+          Add Image
+        </Typography>
+      </Box>
+    )}
+  </label>
+</Box>
+
 
         <Controller
           name="title"
